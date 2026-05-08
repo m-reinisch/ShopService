@@ -64,11 +64,25 @@ class ProductRepoTest {
 
     @Test
     void productInquiry_shouldBeNoProduct_whenFailed() {
-//        ProductRepo warehouse= new ProductRepo();
-//        String expected= "Product not availabble!";
-//        String actual;
-//
-//        actual= warehouse.productInquiry(Integer.valueOf(1));
-//        assertEquals(expected, actual);
+        ProductRepo warehouse= new ProductRepo();
+        String expected= "Product not availabble!";
+        String actual;
+
+        actual= warehouse.productInquiry(Integer.valueOf(1));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void productInquiry_shouldBeIcecreamWhiskey_whenSuccessful() {
+        Product product1= new Product(1, "Icecream", 1.99);
+        Product product2= new Product(2, "Whiskey", 19.99);
+        ProductRepo warehouse= new ProductRepo();
+        String expected= "1 Icecream 1.99\n2 Whiskey 19.99\n";
+        String actual;
+
+        warehouse.storeProduct(product1);
+        warehouse.storeProduct(product2);
+        actual= warehouse.productInquiry();
+        assertEquals(expected, actual);
     }
 }

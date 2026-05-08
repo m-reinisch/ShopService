@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /** Product Warehouse
@@ -42,7 +43,11 @@ public class ProductRepo {
      * @return formated string
      */
     public String productInquiry(Integer id){
-        return String.format("1 Icecream 1.99");
+        if (warehouse.containsKey(id)){
+            return String.format(Locale.US,"%d %s %.2f", warehouse.get(id).id(), warehouse.get(id).name(), warehouse.get(id).price());
+        } else {
+            return "Product not availabble!";
+        }
     }
 
     /** Displays all products.
@@ -50,7 +55,12 @@ public class ProductRepo {
      * @return formated string
      */
     public String productInquiry(){
-        return String.format("");
+        String products= "";
+
+        for (Integer key:warehouse.keySet()){
+            products+= String.format(Locale.US,"%d %s %.2f\n", warehouse.get(key).id(), warehouse.get(key).name(), warehouse.get(key).price());
+        }
+        return products;
     }
 
     public Map<Integer, Product> getWarehouse() {
