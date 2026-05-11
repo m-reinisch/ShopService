@@ -1,13 +1,11 @@
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /** Order Filing Folder
  *
  * @author Michael Reinisch
  */
 public class OrderListRepo implements OrderRepo {
-    private final Map<Integer, Order> orderMap= new HashMap<>();
+    private final List<Order> orderList= new ArrayList<>();
 
     /** Adds an order
      *
@@ -15,10 +13,10 @@ public class OrderListRepo implements OrderRepo {
      * @return true = successful, false = failed
      */
     public Boolean addOrder(Order order){
-        if (orderMap.containsKey(order.id())){
+        if (orderList.contains(order)){
             return false;
         } else {
-            orderMap.put(order.id(), order);
+            orderList.add(order);
             return true;
         }
     }
@@ -29,12 +27,13 @@ public class OrderListRepo implements OrderRepo {
      * @return true = successful, false = failed
      */
     public Boolean removeOrder(Integer orderId){
-        if (orderMap.containsKey(orderId)){
-            orderMap.remove(orderId);
-            return true;
-        } else {
-            return false;
+        for (int i= 0; i < orderList.size(); i++){
+            if (orderList.get(i).id() == orderId){
+                orderList.remove(i);
+                return true;
+            }
         }
+        return false;
     }
 
     /** Displays one order, if available.
@@ -43,11 +42,12 @@ public class OrderListRepo implements OrderRepo {
      * @return formated string
      */
     public String orderInquiry(Integer id){
-        if (orderMap.containsKey(id)){
-            return String.format(Locale.US,"%d %s %s %s", orderMap.get(id).id(), orderMap.get(id).name(), orderMap.get(id).costumer(), orderMap.get(id).products());
-        } else {
-            return "Order not available!";
+        for (int i= 0; i < orderList.size(); i++){
+            if (orderList.get(i).id() == id){
+                return String.format(Locale.US,"%d %s %s %s", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products());
+            }
         }
+        return "Order not available!";
     }
 
     /** Displays all orders
@@ -57,13 +57,16 @@ public class OrderListRepo implements OrderRepo {
     public String orderInquiry(){
         String orders= "";
 
-        for (Integer key:orderMap.keySet()){
-            orders+= String.format(Locale.US,"%d %s %s %s\n", orderMap.get(key).id(), orderMap.get(key).name(), orderMap.get(key).costumer(), orderMap.get(key).products());
+        for (int i= 0; i < orderList.size(); i++){
+            orders+= String.format(Locale.US,"%d %s %s %s\n", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products());
         }
         return orders;
     }
 
-    public Map<Integer, Order> getOrderMap() {
-        return orderMap;
+    /** Nur zu debug Zwecken
+     *
+     */
+    public List<Order> getOrderList() {
+        return orderList;
     }
 }
