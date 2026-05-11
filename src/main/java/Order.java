@@ -3,5 +3,5 @@ import java.util.List;
 public record Order(Integer id,
                     String name,
                     String costumer,
-                    List<String> products) {
+                    List<Product> products) {
 }

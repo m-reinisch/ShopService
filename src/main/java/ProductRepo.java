@@ -46,7 +46,7 @@ public class ProductRepo {
         if (warehouse.containsKey(id)){
             return String.format(Locale.US,"%d %s %.2f", warehouse.get(id).id(), warehouse.get(id).name(), warehouse.get(id).price());
         } else {
-            return "Product not availabble!";
+            return "Product not available!";
         }
     }
 

@@ -16,7 +16,7 @@ class ProductRepoTest {
     }
 
     @Test
-    void storeProduct_shouldBeFase_whenFailed() {
+    void storeProduct_shouldBeFalse_whenFailed() {
         Product product1= new Product(1, "Icecream", 1.99);
         Product product2= new Product(1, "Whiskey", 19.99);
         ProductRepo warehouse= new ProductRepo();
@@ -65,7 +65,7 @@ class ProductRepoTest {
     @Test
     void productInquiry_shouldBeNoProduct_whenFailed() {
         ProductRepo warehouse= new ProductRepo();
-        String expected= "Product not availabble!";
+        String expected= "Product not available!";
         String actual;
 
         actual= warehouse.productInquiry(Integer.valueOf(1));
