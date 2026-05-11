@@ -7,10 +7,11 @@ import java.util.List;
  */
 public class ShopService {
     private final ProductRepo warehouse= new ProductRepo();
-    private OrderListRepo orderListRepo= new OrderListRepo();
+    private final OrderRepo orderRepo;
     private static Integer orderNumber= 0;
 
-    public ShopService() {
+    public ShopService(OrderRepo orderRepo) {
+        this.orderRepo= orderRepo;
         genrateInventory();
     }
 
@@ -29,7 +30,7 @@ public class ShopService {
             }
         }
         Order order= new Order(++orderNumber, "Custom Order", customerName, orderList);
-        orderListRepo.addOrder(order);
+        orderRepo.addOrder(order);
     }
 
     private void genrateInventory(){
