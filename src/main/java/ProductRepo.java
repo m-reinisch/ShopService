@@ -63,6 +63,20 @@ public class ProductRepo {
         return products;
     }
 
+    /** Finds the first product in stock.
+     *
+     * @param productName product to search for
+     * @return id of product or 0
+     */
+    public Integer findByProductMame(String productName){
+        for (Integer key:warehouse.keySet()){
+            if (warehouse.get(key).name() == productName){
+                return warehouse.get(key).id();
+            }
+        }
+        return 0;
+    }
+
     public Map<Integer, Product> getWarehouse() {
         return warehouse;
     }

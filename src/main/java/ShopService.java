@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import java.util.List;
+
+/** A service through which we can place new orders.
+ *
+ * @author Michael Reinisch
+ */
+public class ShopService {
+    private final ProductRepo warehouse= new ProductRepo();
+    private OrderListRepo orderListRepo= new OrderListRepo();
+    private static Integer orderNumber= 0;
+
+    public ShopService() {
+        genrateInventory();
+    }
+
+    /** Order
+     *
+     * @param products List of Products to Order
+     */
+    public void customerOrder(String customerName, List<Product> products){
+        List<Product> orderList= new ArrayList<>();
+
+        for (int n= 0; n < products.size(); n++){
+            if (warehouse.findByProductMame(products.get(n).name()) == 0){
+                System.out.println("Product not available!");
+            } else {
+                orderList.add(products.get(n));
+            }
+        }
+        Order order= new Order(++orderNumber, "Custom Order", customerName, orderList);
+        orderListRepo.addOrder(order);
+    }
+
+    private void genrateInventory(){
+        int i= 1;
+
+        for ( ; i < 11; i++){
+            Product product= new Product(i, "Icecream", 1.99);
+            warehouse.storeProduct(product);
+        }
+        for ( ; i < 18; i++){
+            Product product= new Product(i, "Whiskey", 19.99);
+            warehouse.storeProduct(product);
+        }
+    }
+}

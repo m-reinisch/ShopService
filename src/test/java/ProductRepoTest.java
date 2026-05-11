@@ -85,4 +85,32 @@ class ProductRepoTest {
         actual= warehouse.productInquiry();
         assertEquals(expected, actual);
     }
+
+    @Test
+    void findByProductName_shouldBe2_whenFoundWhiskey(){
+        Product product1= new Product(1, "Icecream", 1.99);
+        Product product2= new Product(2, "Whiskey", 19.99);
+        ProductRepo warehouse= new ProductRepo();
+        Integer expected= 2;
+        Integer actual;
+
+        warehouse.storeProduct(product1);
+        warehouse.storeProduct(product2);
+        actual= warehouse.findByProductMame("Whiskey");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void findByProductName_shouldBe0_whenNotoundWhisky(){
+        Product product1= new Product(1, "Icecream", 1.99);
+        Product product2= new Product(2, "Whiskey", 19.99);
+        ProductRepo warehouse= new ProductRepo();
+        Integer expected= 0;
+        Integer actual;
+
+        warehouse.storeProduct(product1);
+        warehouse.storeProduct(product2);
+        actual= warehouse.findByProductMame("Whisky");
+        assertEquals(expected, actual);
+    }
 }
