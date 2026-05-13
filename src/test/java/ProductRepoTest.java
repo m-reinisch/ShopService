@@ -101,7 +101,7 @@ class ProductRepoTest {
     }
 
     @Test
-    void findByProductName_shouldBe0_whenNotoundWhisky(){
+    void findByProductName_shouldBe0_whenNotFoundWhisky(){
         Product product1= new Product(1, "Icecream", 1.99);
         Product product2= new Product(2, "Whiskey", 19.99);
         ProductRepo warehouse= new ProductRepo();

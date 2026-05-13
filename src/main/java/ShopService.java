@@ -19,20 +19,39 @@ public class ShopService {
      *
      * @param products List of Products to Order
      */
-    public void customerOrder(String customerName, List<Product> products){
+    public Integer customerOrder(String customerName, List<Product> products){
         List<Product> orderList= new ArrayList<>();
+        Double totalPrice= 0.0;
 
         for (int n= 0; n < products.size(); n++){
             if (warehouse.findByProductMame(products.get(n).name()) == 0){
                 System.out.println("Product not available!");
             } else {
                 orderList.add(products.get(n));
+                totalPrice= totalPrice + products.get(n).price();
             }
         }
-        Order order= new Order(++orderNumber, "Custom Order", customerName, orderList);
+        Order order= new Order(++orderNumber, "Custom Order", customerName, orderList, totalPrice);
         orderRepo.addOrder(order);
+        return orderNumber;
     }
 
+    /** Displays the customer's first order.
+     *
+     * @param orderId to search for
+     * @return order or not found
+     */
+    public  String showOrder(Integer orderId){
+        if (orderRepo.orderInquiry(orderId) == "Order not available!") {
+            return "Order not found!";
+        } else {
+            return orderRepo.orderInquiry(orderId);
+        }
+    }
+
+    /** Internal method for product generation
+     *
+     */
     private void genrateInventory(){
         int i= 1;
 
