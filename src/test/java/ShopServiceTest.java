@@ -41,14 +41,11 @@ class ShopServiceTest {
     void showOrder_shouldBeNotFound_whenWrongCustomer() {
         OrderMapRepo mapRepo= new OrderMapRepo();
         ShopService shop= new ShopService(mapRepo);
-        Product product= new Product(1, "Icecream", 1.99);
-        List<Product> productList= new ArrayList<>();
+        Integer orderId= 1;
         String expected = "Order not found!";
         String actual;
 
-        productList.add(product);
-        shop.customerOrder("MR", productList);
-        actual= shop.showOrder("");
+        actual= shop.showOrder(orderId);
         assertEquals(expected, actual);
     }
 
@@ -58,12 +55,13 @@ class ShopServiceTest {
         ShopService shop= new ShopService(mapRepo);
         Product product1= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
-        String expected = "Order not found!";
+        Integer orderId;
+        String expected = "2 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99";
         String actual;
 
         productList.add(product1);
-        shop.customerOrder("MR", productList);
-        actual= shop.showOrder("");
+        orderId= shop.customerOrder("MR", productList);
+        actual= shop.showOrder(orderId);
         assertEquals(expected, actual);
     }
 }

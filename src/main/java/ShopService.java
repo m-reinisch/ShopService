@@ -19,7 +19,7 @@ public class ShopService {
      *
      * @param products List of Products to Order
      */
-    public void customerOrder(String customerName, List<Product> products){
+    public Integer customerOrder(String customerName, List<Product> products){
         List<Product> orderList= new ArrayList<>();
         Double totalPrice= 0.0;
 
@@ -33,17 +33,20 @@ public class ShopService {
         }
         Order order= new Order(++orderNumber, "Custom Order", customerName, orderList, totalPrice);
         orderRepo.addOrder(order);
+        return orderNumber;
     }
 
     /** Displays the customer's first order.
      *
-     * @param customerName to search for
+     * @param orderId to search for
      * @return order or not found
      */
-    public  String showOrder(String customerName){
-        String order= "Order not found!";
-
-        return order;
+    public  String showOrder(Integer orderId){
+        if (orderRepo.orderInquiry(orderId) == "Order not available!") {
+            return "Order not found!";
+        } else {
+            return orderRepo.orderInquiry(orderId);
+        }
     }
 
     /** Internal method for product generation
