@@ -1,9 +1,7 @@
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SplittableRandom;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShopServiceTest {
@@ -20,7 +18,7 @@ class ShopServiceTest {
 
         productList.add(product1);
         productList.add(product2);
-        Order order= new Order(1, "Mixed Order", "MR", productList);
+        Order order= new Order(1, "Mixed Order", "MR", productList, 21.98);
         shop.customerOrder("MR", productList);
 //        assertEquals(expected, actual);
     }
@@ -35,7 +33,7 @@ class ShopServiceTest {
 
         productList.add(product1);
         productList.add(product2);
-        Order order= new Order(1, "Mixed Order", "MR", productList);
+        Order order= new Order(1, "Mixed Order", "MR", productList, 21.98);
         shop.customerOrder("MR", productList);
         ;
     }
