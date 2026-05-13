@@ -41,7 +41,9 @@ public class ShopService {
      * @return order or not found
      */
     public  String showOrder(String customerName){
-        return "Order not found!";
+        String order= "Order not found!";
+
+        return order;
     }
 
     /** Internal method for product generation
