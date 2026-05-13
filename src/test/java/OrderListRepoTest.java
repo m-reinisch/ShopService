@@ -77,7 +77,7 @@ class OrderListRepoTest {
         productList.add(product);
         Order order= new Order(1, "Order Icecream", "MR", productList, 1.99);
         OrderListRepo orderListRepo= new OrderListRepo();
-        String expected= "1 Order Icecream MR [Product[id=1, name=Icecream, price=1.99]]";
+        String expected= "1 Order Icecream MR [Product[id=1, name=Icecream, price=1.99]] 1.99";
         String actual;
 
         orderListRepo.addOrder(order);
@@ -96,7 +96,7 @@ class OrderListRepoTest {
         productList2.add(product2);
         Order order2= new Order(2, "Order Spirit", "MR", productList2, 19.99);
         OrderListRepo orderListRepo= new OrderListRepo();
-        String expected= "1 Order Icecream MR [Product[id=1, name=Icecream, price=1.99]]\n2 Order Spirit MR [Product[id=2, name=Whiskey, price=19.99]]\n";
+        String expected= "1 Order Icecream MR [Product[id=1, name=Icecream, price=1.99]] 1.99\n2 Order Spirit MR [Product[id=2, name=Whiskey, price=19.99]] 19.99\n";
         String actual;
 
         orderListRepo.addOrder(order1);

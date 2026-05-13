@@ -8,39 +8,44 @@ class ShopServiceTest {
 
     @Test
     void customerOrder_shouldBeNotAvailable_whenOneProductFailed() {
-        OrderMapRepo mapRepo= new OrderMapRepo();
-        ShopService shop= new ShopService(mapRepo);
+        OrderRepo orderRepo= new OrderMapRepo();
+        ShopService shop= new ShopService(orderRepo);
         Product product1= new Product(1, "Icecream", 1.99);
         Product product2= new Product(2, "Whisky", 19.99);
         List<Product> productList= new ArrayList<>();
-        String expected= "Product not available!";
+        Integer orderId;
+        String expected = "1 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99";
         String actual;
 
         productList.add(product1);
         productList.add(product2);
-        Order order= new Order(1, "Mixed Order", "MR", productList, 21.98);
-        shop.customerOrder("MR", productList);
-//        assertEquals(expected, actual);
+        orderId= shop.customerOrder("MR", productList);
+        actual= shop.showOrder(orderId);
+        assertEquals(expected, actual);
     }
 
     @Test
     void customerOrder() {
-        OrderMapRepo mapRepo= new OrderMapRepo();
-        ShopService shop= new ShopService(mapRepo);
+        OrderRepo orderRepo= new OrderMapRepo();
+        ShopService shop= new ShopService(orderRepo);
         Product product1= new Product(1, "Icecream", 1.99);
         Product product2= new Product(2, "Whiskey", 19.99);
         List<Product> productList= new ArrayList<>();
+        Integer orderId;
+        String expected = "3 Custom Order MR [Product[id=1, name=Icecream, price=1.99], Product[id=2, name=Whiskey, price=19.99]] 21.98";
+        String actual;
 
         productList.add(product1);
         productList.add(product2);
-        shop.customerOrder("MR", productList);
-        ;
+        orderId= shop.customerOrder("MR", productList);
+        actual= shop.showOrder(orderId);
+        assertEquals(expected, actual);
     }
 
     @Test
     void showOrder_shouldBeNotFound_whenWrongCustomer() {
-        OrderMapRepo mapRepo= new OrderMapRepo();
-        ShopService shop= new ShopService(mapRepo);
+        OrderRepo orderRepo= new OrderMapRepo();
+        ShopService shop= new ShopService(orderRepo);
         Integer orderId= 1;
         String expected = "Order not found!";
         String actual;
@@ -51,15 +56,15 @@ class ShopServiceTest {
 
     @Test
     void showOrder_shouldBeOrder_whenCustomer() {
-        OrderMapRepo mapRepo= new OrderMapRepo();
-        ShopService shop= new ShopService(mapRepo);
-        Product product1= new Product(1, "Icecream", 1.99);
+        OrderRepo orderRepo= new OrderMapRepo();
+        ShopService shop= new ShopService(orderRepo);
+        Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
         Integer orderId;
         String expected = "2 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99";
         String actual;
 
-        productList.add(product1);
+        productList.add(product);
         orderId= shop.customerOrder("MR", productList);
         actual= shop.showOrder(orderId);
         assertEquals(expected, actual);

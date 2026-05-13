@@ -13,6 +13,8 @@ public class Main {
         productList.add(product1);
         productList.add(product2);
         shop.customerOrder("MR", productList);
+        shop.customerOrder("AD", productList);
+        System.out.println(shop.showOrder(2));
         System.out.println(shop.showOrder(1));
     }
 }
