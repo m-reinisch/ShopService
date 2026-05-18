@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /** A service through which we can place new orders.
  *
@@ -47,6 +48,16 @@ public class ShopService {
         } else {
             return orderRepo.orderInquiry(orderId);
         }
+    }
+
+    public Stream<Order> listOrders(OrderStatus status){
+        Order order= null;
+
+        order= orderRepo.getOrder(status);
+        if (order != null){
+            return Stream.<Order>builder().add(order).build();
+        }
+        return null;
     }
 
     /** Internal method for product generation

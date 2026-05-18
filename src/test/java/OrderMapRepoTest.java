@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderMapRepoTest {
@@ -103,5 +104,26 @@ class OrderMapRepoTest {
         orderMapRepo.addOrder(order2);
         actual= orderMapRepo.orderInquiry();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getOrder_shouldBeNull_whenNotFound(){
+        OrderMapRepo orderMapRepo= new OrderMapRepo();
+
+        assertThat(orderMapRepo.getOrder(OrderStatus.COMPLETED))
+                .isEqualTo(null);
+    }
+
+    @Test
+    void getOrder_shouldBeOrdeer_whenFound(){
+        OrderMapRepo orderMapRepo= new OrderMapRepo();
+        Product product= new Product(1, "Icecream", 1.99);
+        List<Product> productList= new ArrayList<>();
+        productList.add(product);
+        Order order= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING);
+
+        orderMapRepo.addOrder(order);
+        assertThat(orderMapRepo.getOrder(OrderStatus.PROCESSING))
+                .isEqualTo(order);
     }
 }

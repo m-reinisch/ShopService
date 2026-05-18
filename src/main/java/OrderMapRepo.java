@@ -14,6 +14,7 @@ public class OrderMapRepo implements OrderRepo {
      * @param order to store
      * @return true = successful, false = failed
      */
+    @Override
     public Boolean addOrder(Order order){
         if (orderMap.containsKey(order.id())){
             return false;
@@ -28,6 +29,7 @@ public class OrderMapRepo implements OrderRepo {
      * @param orderId id of the order to be removed
      * @return true = successful, false = failed
      */
+    @Override
     public Boolean removeOrder(Integer orderId){
         if (orderMap.containsKey(orderId)){
             orderMap.remove(orderId);
@@ -42,6 +44,7 @@ public class OrderMapRepo implements OrderRepo {
      * @param id of the product to be shown
      * @return formated string
      */
+    @Override
     public String orderInquiry(Integer id){
         if (orderMap.containsKey(id)){
             return String.format(Locale.US,"%d %s %s %s %.2f %s", orderMap.get(id).id(), orderMap.get(id).name(), orderMap.get(id).costumer(), orderMap.get(id).products(), orderMap.get(id).totalPrice(), orderMap.get(id).status());
@@ -54,6 +57,7 @@ public class OrderMapRepo implements OrderRepo {
      *
      * @return formated string
      */
+    @Override
     public String orderInquiry(){
         String orders= "";
 
@@ -61,6 +65,21 @@ public class OrderMapRepo implements OrderRepo {
             orders+= String.format(Locale.US,"%d %s %s %s %.2f %s\n", orderMap.get(key).id(), orderMap.get(key).name(), orderMap.get(key).costumer(), orderMap.get(key).products(), orderMap.get(key).totalPrice(), orderMap.get(key).status());
         }
         return orders;
+    }
+
+    /** Find Orders by Status
+     *
+     * @param status being searched for
+     * @return order or null
+     */
+    @Override
+    public Order getOrder(OrderStatus status){
+        for (Order o:orderMap.values()){
+            if (o.status() == status){
+                return o;
+            }
+        }
+        return null;
     }
 
     /** For testing purposes only

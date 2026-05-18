@@ -12,6 +12,7 @@ public class OrderListRepo implements OrderRepo {
      * @param order to store
      * @return true = successful, false = failed
      */
+    @Override
     public Boolean addOrder(Order order){
         if (orderList.contains(order)){
             return false;
@@ -26,6 +27,7 @@ public class OrderListRepo implements OrderRepo {
      * @param orderId id of the order to be removed
      * @return true = successful, false = failed
      */
+    @Override
     public Boolean removeOrder(Integer orderId){
         for (int i= 0; i < orderList.size(); i++){
             if (orderList.get(i).id() == orderId){
@@ -41,6 +43,7 @@ public class OrderListRepo implements OrderRepo {
      * @param id of the product to be shown
      * @return formated string
      */
+    @Override
     public String orderInquiry(Integer id){
         for (int i= 0; i < orderList.size(); i++){
             if (orderList.get(i).id() == id){
@@ -54,6 +57,7 @@ public class OrderListRepo implements OrderRepo {
      *
      * @return formated string
      */
+    @Override
     public String orderInquiry(){
         String orders= "";
 
@@ -61,6 +65,11 @@ public class OrderListRepo implements OrderRepo {
             orders+= String.format(Locale.US,"%d %s %s %s %.2f %s\n", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products(), orderList.get(i).totalPrice(), orderList.get(i).status());
         }
         return orders;
+    }
+
+    @Override
+    public Order getOrder(OrderStatus status) {
+        return null;
     }
 
     /** Nur zu debug Zwecken
