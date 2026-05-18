@@ -11,10 +11,14 @@ public class Main {
         List<Product> productList= new ArrayList<>();
 
         productList.add(product1);
-        productList.add(product2);
-        shop.customerOrder("MR", productList);
-        shop.customerOrder("AD", productList);
-        System.out.println(shop.showOrder(2));
-        System.out.println(shop.showOrder(1));
+        try {
+            shop.customerOrder("MR", productList);
+            System.out.println(shop.showOrder(1));
+            productList.add(product2);
+            shop.customerOrder("AD", productList);
+            System.out.println(shop.showOrder(2));
+        } catch (ProductOutOfStockException e) {
+            System.out.println("An exception has occurred: " + e.getMessage());
+        }
     }
 }

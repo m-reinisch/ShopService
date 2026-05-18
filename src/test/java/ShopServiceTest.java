@@ -7,32 +7,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class ShopServiceTest {
 
     @Test
-    void customerOrder_shouldBeNotAvailable_whenOneProductFailed() {
+    void customerOrder_shouldThrowException_whenOneProductFailed() {
         OrderRepo orderRepo= new OrderMapRepo();
         ShopService shop= new ShopService(orderRepo);
         Product product1= new Product(1, "Icecream", 1.99);
         Product product2= new Product(2, "Whisky", 19.99);
         List<Product> productList= new ArrayList<>();
-        Integer orderId;
-        String expected = "1 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING";
-        String actual;
 
         productList.add(product1);
         productList.add(product2);
-        orderId= shop.customerOrder("MR", productList);
-        actual= shop.showOrder(orderId);
-        assertEquals(expected, actual);
+        assertThrows(ProductOutOfStockException.class, () -> shop.customerOrder("MR", productList));
     }
 
     @Test
-    void customerOrder() {
+    void customerOrder() throws ProductOutOfStockException {
         OrderRepo orderRepo= new OrderMapRepo();
         ShopService shop= new ShopService(orderRepo);
         Product product1= new Product(1, "Icecream", 1.99);
         Product product2= new Product(2, "Whiskey", 19.99);
         List<Product> productList= new ArrayList<>();
         Integer orderId;
-        String expected = "4 Custom Order MR [Product[id=1, name=Icecream, price=1.99], Product[id=2, name=Whiskey, price=19.99]] 21.98 PROCESSING";
+        String expected = "3 Custom Order MR [Product[id=1, name=Icecream, price=1.99], Product[id=2, name=Whiskey, price=19.99]] 21.98 PROCESSING";
         String actual;
 
         productList.add(product1);
@@ -55,13 +50,13 @@ class ShopServiceTest {
     }
 
     @Test
-    void showOrder_shouldBeOrder_whenCustomer() {
+    void showOrder_shouldBeOrder_whenCustomer() throws ProductOutOfStockException {
         OrderRepo orderRepo= new OrderMapRepo();
         ShopService shop= new ShopService(orderRepo);
         Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
         Integer orderId;
-        String expected = "2 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING";
+        String expected = "1 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING";
         String actual;
 
         productList.add(product);
@@ -80,7 +75,7 @@ class ShopServiceTest {
     }
 
     @Test
-    void listOrders_shouldBeStream_whenFound(){
+    void listOrders_shouldBeStream_whenFound() throws ProductOutOfStockException {
         OrderRepo orderRepo= new OrderMapRepo();
         ShopService shop= new ShopService(orderRepo);
         Product product= new Product(1, "Icecream", 1.99);

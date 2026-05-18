@@ -19,14 +19,15 @@ public class ShopService {
     /** Order
      *
      * @param products List of Products to Order
+     * @throws ProductOutOfStockException whem one product of list not found
      */
-    public Integer customerOrder(String customerName, List<Product> products){
+    public Integer customerOrder(String customerName, List<Product> products) throws ProductOutOfStockException {
         List<Product> orderList= new ArrayList<>();
         Double totalPrice= 0.0;
 
         for (int n= 0; n < products.size(); n++){
             if (warehouse.findByProductMame(products.get(n).name()) == 0){
-                System.out.println("Product not available!");
+                throw new ProductOutOfStockException(String.format("Das Produkt %s ist nicht auf Lager!", products.get(n).name()));
             } else {
                 orderList.add(products.get(n));
                 totalPrice= totalPrice + products.get(n).price();
