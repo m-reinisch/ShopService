@@ -27,7 +27,7 @@ class ShopServiceTest {
         Product product2= new Product(2, "Whiskey", 19.99);
         List<Product> productList= new ArrayList<>();
         Integer orderId;
-        String expected = "3 Custom Order MR [Product[id=1, name=Icecream, price=1.99], Product[id=2, name=Whiskey, price=19.99]] 21.98 PROCESSING";
+        String expected = "4 Custom Order MR [Product[id=1, name=Icecream, price=1.99], Product[id=2, name=Whiskey, price=19.99]] 21.98 PROCESSING";
         String actual;
 
         productList.add(product1);
@@ -56,7 +56,7 @@ class ShopServiceTest {
         Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
         Integer orderId;
-        String expected = "1 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING";
+        String expected = "2 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING";
         String actual;
 
         productList.add(product);
@@ -87,5 +87,28 @@ class ShopServiceTest {
         assertThat(shop.listOrders(OrderStatus.PROCESSING)
                 .toList().getFirst().id())
                 .isEqualTo(orderId);
+    }
+
+    @Test
+    void updateOrder_shouldBeFalse_whenNotFound() {
+        OrderRepo orderRepo= new OrderMapRepo();
+        ShopService shop= new ShopService(orderRepo);
+
+        assertThat(shop.updateOrder(1, OrderStatus.IN_DELIVERY))
+                .isFalse();
+    }
+
+    @Test
+    void updateOrder_shouldBeTrue_whenUpdated() throws ProductOutOfStockException {
+        OrderRepo orderRepo= new OrderMapRepo();
+        ShopService shop= new ShopService(orderRepo);
+        Product product= new Product(1, "Icecream", 1.99);
+        List<Product> productList= new ArrayList<>();
+        Integer orderId;
+
+        productList.add(product);
+        orderId= shop.customerOrder("MR", productList);
+        assertThat(shop.updateOrder(orderId, OrderStatus.IN_DELIVERY))
+                .isTrue();
     }
 }

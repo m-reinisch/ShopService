@@ -72,6 +72,11 @@ public class OrderListRepo implements OrderRepo {
         return null;
     }
 
+    @Override
+    public Order getOrder(Integer id) {
+        return null;
+    }
+
     /** Nur zu debug Zwecken
      *
      */

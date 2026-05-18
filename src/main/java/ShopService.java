@@ -61,6 +61,25 @@ public class ShopService {
         return null;
     }
 
+    /** The requested order is being updated.
+     *
+     * @param orderId to search for
+     * @param orderStatus new status
+     * @return true = updated, false = error occurred
+     */
+    public Boolean updateOrder(Integer orderId, OrderStatus orderStatus){
+        Order tepOrder= null;
+
+        if (orderRepo.getOrder(orderId) != null){
+            tepOrder= orderRepo.getOrder(orderId).withStatus(orderStatus);
+            orderRepo.removeOrder(orderId);
+            orderRepo.addOrder(tepOrder);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /** Internal method for product generation
      *
      */

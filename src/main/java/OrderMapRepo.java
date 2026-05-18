@@ -82,6 +82,21 @@ public class OrderMapRepo implements OrderRepo {
         return null;
     }
 
+    /** Find Orders by ID
+     *
+     * @param id being searched for
+     * @return order or null
+     */
+    @Override
+    public Order getOrder(Integer id){
+        for (Order o:orderMap.values()){
+            if (o.id() == id){
+                return o;
+            }
+        }
+        return null;
+    }
+
     /** For testing purposes only
      *
      * @return complete map

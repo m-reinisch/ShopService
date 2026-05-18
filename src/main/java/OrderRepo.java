@@ -4,4 +4,5 @@ public interface OrderRepo {
     public String orderInquiry(Integer id);
     public String orderInquiry();
     public Order getOrder(OrderStatus status);
+    public Order getOrder(Integer id);
 }
