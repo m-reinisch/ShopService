@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductRepoTest {
@@ -112,5 +113,23 @@ class ProductRepoTest {
         warehouse.storeProduct(product2);
         actual= warehouse.findByProductMame("Whisky");
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getProduct_shouldBeEmpty_whenNotFound(){
+        ProductRepo warehouse= new ProductRepo();
+
+        assertThat(warehouse.getProduct(1))
+                .isEmpty();
+    }
+
+    @Test
+    void getProduct_shouldBeOptionalProduct_whenFound(){
+        ProductRepo warehouse= new ProductRepo();
+        Product product= new Product(1, "Icecream", 1.99);
+
+        warehouse.storeProduct(product);
+        assertThat(warehouse.getProduct(1))
+                .contains(product);
     }
 }

@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 /** Product Warehouse
  *
@@ -23,7 +24,7 @@ public class ProductRepo {
         }
     }
 
-    /** Removes one producrt
+    /** Removes one product
      *
      * @param productId id of the product to be removed
      * @return true = successful, false = failed
@@ -34,6 +35,19 @@ public class ProductRepo {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /** Returns the product corresponding to the ID.
+     *
+     * @param id of the product to being searched
+     * @return Optional with product or empty optional
+     */
+    public Optional<Product> getProduct(Integer id){
+        if (warehouse.containsKey(id)){
+            return Optional.of(warehouse.get(id));
+        } else {
+            return Optional.empty();
         }
     }
 
