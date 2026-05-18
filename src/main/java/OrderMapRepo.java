@@ -44,7 +44,7 @@ public class OrderMapRepo implements OrderRepo {
      */
     public String orderInquiry(Integer id){
         if (orderMap.containsKey(id)){
-            return String.format(Locale.US,"%d %s %s %s %.2f", orderMap.get(id).id(), orderMap.get(id).name(), orderMap.get(id).costumer(), orderMap.get(id).products(), orderMap.get(id).totalPrice());
+            return String.format(Locale.US,"%d %s %s %s %.2f %s", orderMap.get(id).id(), orderMap.get(id).name(), orderMap.get(id).costumer(), orderMap.get(id).products(), orderMap.get(id).totalPrice(), orderMap.get(id).status());
         } else {
             return "Order not available!";
         }
@@ -58,11 +58,15 @@ public class OrderMapRepo implements OrderRepo {
         String orders= "";
 
         for (Integer key:orderMap.keySet()){
-            orders+= String.format(Locale.US,"%d %s %s %s %.2f\n", orderMap.get(key).id(), orderMap.get(key).name(), orderMap.get(key).costumer(), orderMap.get(key).products(), orderMap.get(key).totalPrice());
+            orders+= String.format(Locale.US,"%d %s %s %s %.2f %s\n", orderMap.get(key).id(), orderMap.get(key).name(), orderMap.get(key).costumer(), orderMap.get(key).products(), orderMap.get(key).totalPrice(), orderMap.get(key).status());
         }
         return orders;
     }
 
+    /** For testing purposes only
+     *
+     * @return complete map
+     */
     public Map<Integer, Order> getOrderMap() {
         return orderMap;
     }

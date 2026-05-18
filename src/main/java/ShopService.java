@@ -31,7 +31,7 @@ public class ShopService {
                 totalPrice= totalPrice + products.get(n).price();
             }
         }
-        Order order= new Order(++orderNumber, "Custom Order", customerName, orderList, totalPrice);
+        Order order= new Order(++orderNumber, "Custom Order", customerName, orderList, totalPrice, OrderStatus.PROCESSING);
         orderRepo.addOrder(order);
         return orderNumber;
     }

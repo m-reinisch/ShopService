@@ -14,7 +14,7 @@ class ShopServiceTest {
         Product product2= new Product(2, "Whisky", 19.99);
         List<Product> productList= new ArrayList<>();
         Integer orderId;
-        String expected = "1 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99";
+        String expected = "1 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING";
         String actual;
 
         productList.add(product1);
@@ -32,7 +32,7 @@ class ShopServiceTest {
         Product product2= new Product(2, "Whiskey", 19.99);
         List<Product> productList= new ArrayList<>();
         Integer orderId;
-        String expected = "3 Custom Order MR [Product[id=1, name=Icecream, price=1.99], Product[id=2, name=Whiskey, price=19.99]] 21.98";
+        String expected = "3 Custom Order MR [Product[id=1, name=Icecream, price=1.99], Product[id=2, name=Whiskey, price=19.99]] 21.98 PROCESSING";
         String actual;
 
         productList.add(product1);
@@ -61,7 +61,7 @@ class ShopServiceTest {
         Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
         Integer orderId;
-        String expected = "2 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99";
+        String expected = "2 Custom Order MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING";
         String actual;
 
         productList.add(product);

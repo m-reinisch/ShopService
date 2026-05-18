@@ -4,5 +4,6 @@ public record Order(Integer id,
                     String name,
                     String costumer,
                     List<Product> products,
-                    Double totalPrice) {
+                    Double totalPrice,
+                    OrderStatus status) {
 }

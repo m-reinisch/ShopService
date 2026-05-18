@@ -44,7 +44,7 @@ public class OrderListRepo implements OrderRepo {
     public String orderInquiry(Integer id){
         for (int i= 0; i < orderList.size(); i++){
             if (orderList.get(i).id() == id){
-                return String.format(Locale.US,"%d %s %s %s %.2f", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products(), orderList.get(i).totalPrice());
+                return String.format(Locale.US,"%d %s %s %s %.2f %s", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products(), orderList.get(i).totalPrice(), orderList.get(i).status());
             }
         }
         return "Order not available!";
@@ -58,7 +58,7 @@ public class OrderListRepo implements OrderRepo {
         String orders= "";
 
         for (int i= 0; i < orderList.size(); i++){
-            orders+= String.format(Locale.US,"%d %s %s %s %.2f\n", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products(), orderList.get(i).totalPrice());
+            orders+= String.format(Locale.US,"%d %s %s %s %.2f %s\n", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products(), orderList.get(i).totalPrice(), orderList.get(i).status());
         }
         return orders;
     }
