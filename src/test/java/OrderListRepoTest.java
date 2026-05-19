@@ -1,4 +1,8 @@
 import org.junit.jupiter.api.Test;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +14,7 @@ class OrderListRepoTest {
         Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
         productList.add(product);
-        Order order= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING);
+        Order order= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING, Instant.now());
         OrderListRepo orderListRepo= new OrderListRepo();
         Boolean expected= true;
         Boolean actual;
@@ -24,8 +28,8 @@ class OrderListRepoTest {
         Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
         productList.add(product);
-        Order order1= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING);
-        Order order2= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING);
+        Order order1= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING, Instant.now());
+        Order order2= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING, Instant.now());
         OrderListRepo orderListRepo= new OrderListRepo();
         Boolean expected= false;
         Boolean actual;
@@ -50,7 +54,7 @@ class OrderListRepoTest {
         Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
         productList.add(product);
-        Order order= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING);
+        Order order= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING, Instant.now());
         OrderListRepo orderListRepo= new OrderListRepo();
         Boolean expected= true;
         Boolean actual;
@@ -75,9 +79,10 @@ class OrderListRepoTest {
         Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
         productList.add(product);
-        Order order= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING);
+        Order order= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING, Instant.now());
         OrderListRepo orderListRepo= new OrderListRepo();
-        String expected= "1 Order Icecream MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING";
+        String timestamp= LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm"));
+        String expected= "1 Order Icecream MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING " + timestamp;
         String actual;
 
         orderListRepo.addOrder(order);
@@ -92,11 +97,12 @@ class OrderListRepoTest {
         List<Product> productList1= new ArrayList<>();
         List<Product> productList2= new ArrayList<>();
         productList1.add(product1);
-        Order order1= new Order(1, "Order Icecream", "MR", productList1, 1.99, OrderStatus.PROCESSING);
+        Order order1= new Order(1, "Order Icecream", "MR", productList1, 1.99, OrderStatus.PROCESSING, Instant.now());
         productList2.add(product2);
-        Order order2= new Order(2, "Order Spirit", "MR", productList2, 19.99, OrderStatus.PROCESSING);
+        Order order2= new Order(2, "Order Spirit", "MR", productList2, 19.99, OrderStatus.PROCESSING, Instant.now());
         OrderListRepo orderListRepo= new OrderListRepo();
-        String expected= "1 Order Icecream MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING\n2 Order Spirit MR [Product[id=2, name=Whiskey, price=19.99]] 19.99 PROCESSING\n";
+        String timestamp= LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm"));
+        String expected= "1 Order Icecream MR [Product[id=1, name=Icecream, price=1.99]] 1.99 PROCESSING " + timestamp + "\n2 Order Spirit MR [Product[id=2, name=Whiskey, price=19.99]] 19.99 PROCESSING " + timestamp + "\n";
         String actual;
 
         orderListRepo.addOrder(order1);

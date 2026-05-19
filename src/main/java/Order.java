@@ -1,11 +1,13 @@
 import lombok.With;
+import java.time.Instant;
 import java.util.List;
 
-@With
 public record Order(Integer id,
                     String name,
                     String costumer,
                     List<Product> products,
                     Double totalPrice,
-                    OrderStatus status) {
+                    @With
+                    OrderStatus status,
+                    Instant orderTimestamp) {
 }

@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -46,8 +49,14 @@ public class OrderMapRepo implements OrderRepo {
      */
     @Override
     public String orderInquiry(Integer id){
+        DateTimeFormatter german= DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
+
         if (orderMap.containsKey(id)){
-            return String.format(Locale.US,"%d %s %s %s %.2f %s", orderMap.get(id).id(), orderMap.get(id).name(), orderMap.get(id).costumer(), orderMap.get(id).products(), orderMap.get(id).totalPrice(), orderMap.get(id).status());
+            return String.format(Locale.US,"%d %s %s %s %.2f %s %s",
+                    orderMap.get(id).id(), orderMap.get(id).name(),
+                    orderMap.get(id).costumer(), orderMap.get(id).products(),
+                    orderMap.get(id).totalPrice(), orderMap.get(id).status(),
+                    LocalDateTime.ofInstant(orderMap.get(id).orderTimestamp(), ZoneId.systemDefault()).format(german));
         } else {
             return "Order not available!";
         }
@@ -60,9 +69,14 @@ public class OrderMapRepo implements OrderRepo {
     @Override
     public String orderInquiry(){
         String orders= "";
+        DateTimeFormatter german= DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
 
         for (Integer key:orderMap.keySet()){
-            orders+= String.format(Locale.US,"%d %s %s %s %.2f %s\n", orderMap.get(key).id(), orderMap.get(key).name(), orderMap.get(key).costumer(), orderMap.get(key).products(), orderMap.get(key).totalPrice(), orderMap.get(key).status());
+            orders+= String.format(Locale.US,"%d %s %s %s %.2f %s %s\n",
+                    orderMap.get(key).id(), orderMap.get(key).name(),
+                    orderMap.get(key).costumer(), orderMap.get(key).products(),
+                    orderMap.get(key).totalPrice(), orderMap.get(key).status(),
+                    LocalDateTime.ofInstant(orderMap.get(key).orderTimestamp(), ZoneId.systemDefault()).format(german));
         }
         return orders;
     }

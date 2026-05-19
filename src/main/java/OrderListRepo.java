@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /** Order Filing Folder
@@ -14,12 +17,13 @@ public class OrderListRepo implements OrderRepo {
      */
     @Override
     public Boolean addOrder(Order order){
-        if (orderList.contains(order)){
-            return false;
-        } else {
-            orderList.add(order);
-            return true;
+        for (Order o:orderList){
+            if (o.id() == order.id()){
+                return false;
+            }
         }
+        orderList.add(order);
+        return true;
     }
 
     /** Deletes order
@@ -45,9 +49,15 @@ public class OrderListRepo implements OrderRepo {
      */
     @Override
     public String orderInquiry(Integer id){
+        DateTimeFormatter german= DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
+
         for (int i= 0; i < orderList.size(); i++){
             if (orderList.get(i).id() == id){
-                return String.format(Locale.US,"%d %s %s %s %.2f %s", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products(), orderList.get(i).totalPrice(), orderList.get(i).status());
+                return String.format(Locale.US,"%d %s %s %s %.2f %s %s",
+                        orderList.get(i).id(), orderList.get(i).name(),
+                        orderList.get(i).costumer(), orderList.get(i).products(),
+                        orderList.get(i).totalPrice(), orderList.get(i).status(),
+                        LocalDateTime.ofInstant(orderList.get(i).orderTimestamp(), ZoneId.systemDefault()).format(german));
             }
         }
         return "Order not available!";
@@ -60,9 +70,14 @@ public class OrderListRepo implements OrderRepo {
     @Override
     public String orderInquiry(){
         String orders= "";
+        DateTimeFormatter german= DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
 
         for (int i= 0; i < orderList.size(); i++){
-            orders+= String.format(Locale.US,"%d %s %s %s %.2f %s\n", orderList.get(i).id(), orderList.get(i).name(), orderList.get(i).costumer(), orderList.get(i).products(), orderList.get(i).totalPrice(), orderList.get(i).status());
+            orders+= String.format(Locale.US,"%d %s %s %s %.2f %s %s\n",
+                    orderList.get(i).id(), orderList.get(i).name(),
+                    orderList.get(i).costumer(), orderList.get(i).products(),
+                    orderList.get(i).totalPrice(), orderList.get(i).status(),
+                    LocalDateTime.ofInstant(orderList.get(i).orderTimestamp(), ZoneId.systemDefault()).format(german));
         }
         return orders;
     }

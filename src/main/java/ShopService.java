@@ -1,3 +1,4 @@
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -33,7 +34,7 @@ public class ShopService {
                 totalPrice= totalPrice + products.get(n).price();
             }
         }
-        Order order= new Order(++orderNumber, "Custom Order", customerName, orderList, totalPrice, OrderStatus.PROCESSING);
+        Order order= new Order(++orderNumber, "Custom Order", customerName, orderList, totalPrice, OrderStatus.PROCESSING, Instant.now());
         orderRepo.addOrder(order);
         return orderNumber;
     }
