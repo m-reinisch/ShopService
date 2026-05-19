@@ -1,5 +1,4 @@
 import lombok.RequiredArgsConstructor;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +79,11 @@ public class ShopService {
         }
     }
 
+    /** Finds orders with a given status by timestamp.
+     *
+     * @param status looking for
+     * @return map of orders withh timestamp as key
+     */
     public Map<Instant, Order> getOldestOrderPerStatus(OrderStatus status){
         Map<Instant, Order> orderMap= new HashMap<>();
         List<Order> orderList= orderRepo.getOrder(status);
