@@ -83,7 +83,7 @@ public class OrderListRepo implements OrderRepo {
     }
 
     @Override
-    public Order getOrder(OrderStatus status) {
+    public List<Order> getOrder(OrderStatus status) {
         return null;
     }
 

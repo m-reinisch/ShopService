@@ -5,7 +5,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderMapRepoTest {
@@ -116,12 +115,12 @@ class OrderMapRepoTest {
     void getOrder_shouldBeNull_whenNotFound(){
         OrderMapRepo orderMapRepo= new OrderMapRepo();
 
-        assertThat(orderMapRepo.getOrder(OrderStatus.COMPLETED))
-                .isEqualTo(null);
+        assert(orderMapRepo.getOrder(OrderStatus.COMPLETED))
+                .isEmpty();
     }
 
     @Test
-    void getOrder_shouldBeOrdeer_whenFound(){
+    void getOrder_shouldBeOrder_whenFound(){
         OrderMapRepo orderMapRepo= new OrderMapRepo();
         Product product= new Product(1, "Icecream", 1.99);
         List<Product> productList= new ArrayList<>();
@@ -129,7 +128,27 @@ class OrderMapRepoTest {
         Order order= new Order(1, "Order Icecream", "MR", productList, 1.99, OrderStatus.PROCESSING, Instant.now());
 
         orderMapRepo.addOrder(order);
-        assertThat(orderMapRepo.getOrder(OrderStatus.PROCESSING))
-                .isEqualTo(order);
+        assert(orderMapRepo.getOrder(OrderStatus.PROCESSING))
+                .contains(order);
+    }
+
+    @Test
+    void getOrder_shouldBeListOfOrders_whenFoundOrders(){
+        OrderMapRepo orderMapRepo= new OrderMapRepo();
+        Product product1= new Product(1, "Icecream", 1.99);
+        Product product2= new Product(2, "Whiskey", 19.99);
+        List<Product> productList1= new ArrayList<>();
+        List<Product> productList2= new ArrayList<>();
+        productList1.add(product1);
+        Order order1= new Order(1, "Order Icecream", "MR", productList1, 1.99, OrderStatus.PROCESSING, Instant.now());
+        productList2.add(product2);
+        Order order2= new Order(2, "Order Spirit", "MR", productList2, 19.99, OrderStatus.PROCESSING, Instant.now());
+
+        orderMapRepo.addOrder(order1);
+        orderMapRepo.addOrder(order2);
+        assert(orderMapRepo.getOrder(OrderStatus.PROCESSING))
+                .contains(order1);
+        assert(orderMapRepo.getOrder(OrderStatus.PROCESSING))
+                .contains(order2);
     }
 }

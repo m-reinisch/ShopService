@@ -77,8 +77,8 @@ class ShopServiceTest {
         OrderRepo orderRepo= new OrderMapRepo();
         ShopService shop= new ShopService(orderRepo);
 
-        assertThat(shop.listOrders(OrderStatus.PROCESSING))
-                .isEqualTo(null);
+        assert(shop.listOrders(OrderStatus.PROCESSING).toList())
+                .isEmpty();
     }
 
     @Test

@@ -53,13 +53,7 @@ public class ShopService {
     }
 
     public Stream<Order> listOrders(OrderStatus status){
-        Order order= null;
-
-        order= orderRepo.getOrder(status);
-        if (order != null){
-            return Stream.<Order>builder().add(order).build();
-        }
-        return null;
+        return orderRepo.getOrder(status).stream();
     }
 
     /** The requested order is being updated.

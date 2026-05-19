@@ -1,9 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /** Order Filing Folder
  *
@@ -81,19 +79,22 @@ public class OrderMapRepo implements OrderRepo {
         return orders;
     }
 
-    /** Find Orders by Status
+    /**
+     * Find Orders by Status
      *
      * @param status being searched for
      * @return order or null
      */
     @Override
-    public Order getOrder(OrderStatus status){
+    public List<Order> getOrder(OrderStatus status){
+        List<Order> orderList= new ArrayList<>();
+
         for (Order o:orderMap.values()){
             if (o.status() == status){
-                return o;
+                orderList.add(o);
             }
         }
-        return null;
+        return orderList;
     }
 
     /** Find Orders by ID
