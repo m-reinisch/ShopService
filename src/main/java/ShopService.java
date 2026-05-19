@@ -83,6 +83,7 @@ public class ShopService {
      *
      * @param status looking for
      * @return map of orders withh timestamp as key
+     * todo: reverse order
      */
     public Map<Instant, Order> getOldestOrderPerStatus(OrderStatus status){
         Map<Instant, Order> orderMap= new HashMap<>();

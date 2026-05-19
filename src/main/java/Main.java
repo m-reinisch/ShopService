@@ -1,4 +1,7 @@
 import javax.crypto.spec.PSource;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,10 @@ public class Main {
         } catch (ProductOutOfStockException e) {
             System.out.println("An exception has occurred: " + e.getMessage());
         }
+        shop.getOldestOrderPerStatus(OrderStatus.PROCESSING)
+                .forEach( (i, o) -> System.out.println(
+                        LocalDateTime
+                        .ofInstant(i, ZoneId.systemDefault())));
     }
 
     /** Method for product generation
