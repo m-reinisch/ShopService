@@ -1,3 +1,5 @@
+import lombok.RequiredArgsConstructor;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +9,11 @@ import java.util.stream.Stream;
  *
  * @author Michael Reinisch
  */
+@RequiredArgsConstructor
 public class ShopService {
-    private final ProductRepo warehouse= new ProductRepo();
+    private final ProductRepo warehouse;
     private final OrderRepo orderRepo;
     private static Integer orderNumber= 0;
-
-    public ShopService(OrderRepo orderRepo) {
-        this.orderRepo= orderRepo;
-        genrateInventory();
-    }
 
     /** Order
      *
@@ -52,6 +50,11 @@ public class ShopService {
         }
     }
 
+    /** Finds orders with a given status.
+     *
+     * @param status looking for
+     * @return stream of found orders
+     */
     public Stream<Order> listOrders(OrderStatus status){
         return orderRepo.getOrder(status).stream();
     }
@@ -72,22 +75,6 @@ public class ShopService {
             return true;
         } else {
             return false;
-        }
-    }
-
-    /** Internal method for product generation
-     *
-     */
-    private void genrateInventory(){
-        int i= 1;
-
-        for ( ; i < 11; i++){
-            Product product= new Product(i, "Icecream", 1.99);
-            warehouse.storeProduct(product);
-        }
-        for ( ; i < 18; i++){
-            Product product= new Product(i, "Whiskey", 19.99);
-            warehouse.storeProduct(product);
         }
     }
 }

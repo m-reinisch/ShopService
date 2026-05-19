@@ -5,7 +5,9 @@ import java.util.List;
 public class Main {
     static void main() {
         OrderMapRepo mapRepo= new OrderMapRepo();
-        ShopService shop= new ShopService(mapRepo);
+        ProductRepo productRepo= new ProductRepo();
+        productRepo= genrateInventory(productRepo);
+        ShopService shop= new ShopService(productRepo, mapRepo);
         Product product1= new Product(1, "Icecream", 1.99);
         Product product2= new Product(2, "Whiskey", 19.99);
         List<Product> productList= new ArrayList<>();
@@ -20,5 +22,22 @@ public class Main {
         } catch (ProductOutOfStockException e) {
             System.out.println("An exception has occurred: " + e.getMessage());
         }
+    }
+
+    /** Method for product generation
+     *
+     */
+    private static ProductRepo genrateInventory(ProductRepo warehouse){
+        int i= 1;
+
+        for ( ; i < 11; i++){
+            Product product= new Product(i, "Icecream", 1.99);
+            warehouse.storeProduct(product);
+        }
+        for ( ; i < 18; i++){
+            Product product= new Product(i, "Whiskey", 19.99);
+            warehouse.storeProduct(product);
+        }
+        return warehouse;
     }
 }
