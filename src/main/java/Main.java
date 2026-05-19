@@ -19,6 +19,7 @@ public class Main {
             productList.add(product2);
             shop.customerOrder("AD", productList);
             System.out.println(shop.showOrder(2));
+            shop.customerOrder("MR", productList);
         } catch (ProductOutOfStockException e) {
             System.out.println("An exception has occurred: " + e.getMessage());
         }

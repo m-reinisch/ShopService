@@ -2,7 +2,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /** A service through which we can place new orders.
@@ -76,5 +78,15 @@ public class ShopService {
         } else {
             return false;
         }
+    }
+
+    public Map<Instant, Order> getOldestOrderPerStatus(OrderStatus status){
+        Map<Instant, Order> orderMap= new HashMap<>();
+        List<Order> orderList= orderRepo.getOrder(status);
+
+        for (Order o: orderList){
+            orderMap.put(o.orderTimestamp(), o);
+        }
+        return orderMap;
     }
 }

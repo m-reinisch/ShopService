@@ -151,4 +151,18 @@ class ShopServiceTest {
         assertThat(shop.updateOrder(orderId, OrderStatus.IN_DELIVERY))
                 .isTrue();
     }
+
+    @Test
+    void getOldestOrderPerStatus_shouldBeEmpty_whenNoOrderFound(){
+        OrderRepo orderRepo= new OrderMapRepo();
+        Product product1= new Product(1, "Icecream", 1.99);
+        Product product2= new Product(2, "Whiskey", 19.99);
+        ProductRepo productRepo= new ProductRepo();
+        productRepo.storeProduct(product1);
+        productRepo.storeProduct(product2);
+        ShopService shop= new ShopService(productRepo, orderRepo);
+
+        assert(shop.getOldestOrderPerStatus(OrderStatus.PROCESSING))
+                .isEmpty();
+    }
 }
